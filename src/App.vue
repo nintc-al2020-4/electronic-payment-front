@@ -1,10 +1,14 @@
 <template>
+  <Header></Header>
   <router-view></router-view>
 </template>
 
 <script>
+import Header from "@/components/modules/Header";
+
 export default {
   name: 'App',
+  components: {Header},
   methods : {
     setTitleDescription(routeInstance) {
       // タイトルを設定

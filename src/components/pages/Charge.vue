@@ -1,32 +1,34 @@
 <template>
-  <div id="Charge">
-    <div class="container-fluid">
-      <table class="table table-bordered">
-        <colgroup>
-          <col width="50%">
-          <col width="50%">
-        </colgroup>
-        <thead>
-          <tr>
-            <th>入金額</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>
-              <div class="form-group mb-0">
-                <label>入金額を入力してください
-                  <input v-model.number="number" type="number" class="form-control" min="0">
-                </label>
-                <p v-show="NotNumber" v-bind:style="styleObject">入力が数値ではありません</p>
-              </div>
-            </td>
-
-          </tr>
-        </tbody>
-      </table>
+  <div id="charge">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 col-12">
+          <div class="card h-100">
+            <div class="card-body">
+              <h4 class="card-title">
+                入金額
+              </h4>
+              <form>
+                <div class="form-group">
+                  <label>入金額を入力してください
+                    <input v-model.number="number" type="number" class="form-control" min="0">
+                  </label>
+                  <p v-show="NotNumber" v-bind:style="styleObject">入力が数値ではありません</p>
+                </div>
+                <button type="submit" class="btn btn-dark">チャージ</button>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-12">
+          <div class="card h-100">
+            <div class="card-body">
+              <!-- このあたりが右半分 e.g.)現在の残高と追加した場合の残高を書くなど -->
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-      <button type="submit">チャージ</button>
   </div>
 </template>
 

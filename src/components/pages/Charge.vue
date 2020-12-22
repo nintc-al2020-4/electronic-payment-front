@@ -16,6 +16,7 @@
                   <p v-show="NotNumber" v-bind:style="styleObject">入力が数値ではありません</p>
                 </div>
                 <button type="submit" class="btn btn-dark">チャージ</button>
+                <a href="/home" class="btn btn-dark text-light w-100 my-2" role="button">戻る</a>
               </form>
             </div>
           </div>

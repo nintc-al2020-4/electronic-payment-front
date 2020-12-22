@@ -1,5 +1,5 @@
 <template>
- <img src="assets/payment_qr_code.png">
+ <img src="@/assets/payment_qr_code.png">
 </template>
 
 <script>

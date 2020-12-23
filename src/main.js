@@ -1,7 +1,45 @@
 import { createApp } from 'vue'
+import { createStore } from 'vuex'
+
 import App from './App.vue'
 
 const app = createApp(App)
+
+// Store
+
+const store = createStore({
+    state () {
+        return {
+            balance: 0
+        }
+    },
+    mutations: {
+        setBalance (state, balance) {
+            state.balance = balance;
+        }
+    },
+    actions: {
+        async retrieveBalance (context) {
+            const axiosBase = require('axios');
+            const axios = axiosBase.create({
+                baseURL: 'https://api.crow31415.net',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                responseType: 'json'
+            });
+
+            let balance = 0;
+            await axios.get('/balance').then(responce => {
+                balance = responce.data.balance;
+            }).catch(err => {
+                console.log(err);
+            })
+            context.commit('setBalance', balance);
+        }
+    }
+})
+app.use(store)
 
 // Routing
 

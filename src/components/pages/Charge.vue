@@ -15,7 +15,7 @@
                   </label>
                   <p v-show="NotNumber" v-bind:style="styleObject">入力が数値ではありません</p>
                 </div>
-                <button type="submit" class="btn btn-dark">チャージ</button>
+                <button v-on:click="onSubmit(number)" class="btn btn-dark">チャージ</button>
                 <a href="/home" class="btn btn-dark text-light w-100 my-2" role="button">戻る</a>
               </form>
             </div>
@@ -24,7 +24,20 @@
         <div class="col-md-6 col-12">
           <div class="card h-100">
             <div class="card-body">
-              <!-- このあたりが右半分 e.g.)現在の残高と追加した場合の残高を書くなど -->
+              <h4 class="card-title">
+                残額
+              </h4>
+              <div class="row">
+                <p class="col-5">
+                  {{balance}}
+                </p>
+                <p class="col-2">
+                  ->
+                </p>
+                <p class="col-5">
+                  {{balance + Number(number)}}
+                </p>
+              </div>
             </div>
           </div>
         </div>
@@ -39,6 +52,7 @@ export default {
 
   data() {
     return {
+      balance: 0,
       number: null,
       styleObject: {
         color: 'red'
@@ -46,9 +60,17 @@ export default {
     }
   },
   methods: {
+    async init() {
+      this.balance = await this.getBalance();
+    },
     onSubmit() {
       // 実際はここでWeb APIを叩いて
       // フォームの内容をサーバに送信するはず
+    },
+    async getBalance() {
+      await this.$store.dispatch('retrieveBalance');
+      console.log(this.$store.state.balance);
+      return this.$store.state.balance;
     }
   },
   computed: {
@@ -57,6 +79,9 @@ export default {
       console.log(value);
       return Number.isNaN(value);
     }
+  },
+  created() {
+    this.init();
   }
 }
 </script>

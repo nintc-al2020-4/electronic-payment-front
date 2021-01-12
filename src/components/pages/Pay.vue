@@ -1,20 +1,27 @@
 <template>
- <h4>以下のQRコードをスキャンしてください</h4>
- <!--QRコードは仮です。リポジトリのトップのQRコードです。-->
- <PayQR></PayQR><br>
- <a href="/" class="btn btn-dark" role="button">戻る</a>
+  <div id="pay">
+    <h4>以下のQRコードをスキャンしてください</h4>
+    <div class="qr-code">
+      <qrcode-vue :value="value" :size="size" level="H"></qrcode-vue>
+    </div>
+    <a href="/" class="btn btn-dark" role="button">戻る</a>
+  </div>
+
 </template>
 
 <script>
-import PayQR from '@/components/parts/Pay_Qr.vue'
+import QrcodeVue from 'qrcode.vue'
 
 export default {
   name: "Pay",
-  components: {
-    PayQR
+  data() {
+    return {
+      value: 'https://github.com/nintc-al2020-4/electronic-payment-front/',
+      size: 300,
+    }
   },
-  methods: {
-    
+  components: {
+    QrcodeVue,
   }
 }
 </script>

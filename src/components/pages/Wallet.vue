@@ -4,14 +4,6 @@
             <div class="top">
                 <div class="title">WALLET</div>
                 <div class="money-amount">{{ money }}<span class="tani">YEN</span></div>
-                <form @submit.prevent="addMoney" class="form-inline">
-                    <div class="form-group">
-                        <input type="text" v-model="money" class="form-control" id="moneyInput" placeholder="お金を作ろう">
-                    </div>
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-dark" @click="onChange">Add</button>
-                    </div>   
-                </form>
             </div>
             <div class="money-kind">
                 <ul type="none" class="money-kind-ul">
@@ -26,6 +18,7 @@
                     </li>
                 </ul>
             </div>
+            <a href="/" class="btn btn-dark" role="button">戻る</a>
         </div>
     </div>
 </template>
@@ -38,30 +31,40 @@ export default {
       return {
         money: 0,
         list: [
-            { amount: 0, name: 'tenthousand', image: require('../../assets/10000.png')},
-            { amount: 0, name: 'fivethousand', image: require('../../assets/5000.png')},
-            { amount: 0, name: 'thousand', image: require('../../assets/1000.png')},
-            { amount: 0, name: 'fivehundred', image: require('../../assets/500.png')},
-            { amount: 0, name: 'hundred', image: require('../../assets/100.png')},
-            { amount: 0, name: 'fifty', image: require('../../assets/50.png')},
-            { amount: 0, name: 'ten', image: require('../../assets/10.png')},
-            { amount: 0, name: 'five', image: require('../../assets/5.png')},
-            { amount: 0, name: 'one', image: require('../../assets/1.png')}
+        { amount: 0, name: 'tenthousand', image: require('@/assets/10000.png')},
+        { amount: 0, name: 'fivethousand', image: require('@/assets/5000.png')},
+        { amount: 0, name: 'thousand', image: require('@/assets/1000.png')},
+        { amount: 0, name: 'fivehundred', image: require('@/assets/500.png')},
+        { amount: 0, name: 'hundred', image: require('@/assets/100.png')},
+        { amount: 0, name: 'fifty', image: require('@/assets/50.png')},
+        { amount: 0, name: 'ten', image: require('@/assets/10.png')},
+        { amount: 0, name: 'five', image: require('@/assets/5.png')},
+        { amount: 0, name: 'one', image: require('@/assets/1.png')}
         ]
       }
   },
-  methods: {
-    addMoney: function() {
-        var kinds = [10000, 5000, 1000, 500, 100, 50, 10, 5, 1]
-        var t = this.money
-        for (let i=0; i<kinds.length; i++){
-            this.list[i].amount = Math.floor(t / kinds[i])
-            t = t % kinds[i]
-        }
+   methods: {
+    async init() {
+      let balance = 0;
+      balance = await this.getBalance();
+      this.money = balance;
+      this.showBalance(balance);
     },
-    onChange: function() {
-
+    async getBalance() {
+      await this.$store.dispatch('retrieveBalance');
+      return this.$store.state.balance;
+    },
+    showBalance(balance) {
+      const kinds = [10000, 5000, 1000, 500, 100, 50, 10, 5, 1];
+      let tmp = balance;
+      for (let i=0; i<kinds.length; i++){
+        this.list[i].amount = Math.floor(tmp / kinds[i]);
+        tmp = tmp % kinds[i];
+      }
     }
+  },
+  created() {
+    this.init();
   }
 }
 </script>

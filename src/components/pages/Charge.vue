@@ -63,9 +63,19 @@ export default {
     async init() {
       this.balance = await this.getBalance();
     },
-    onSubmit() {
-      // 実際はここでWeb APIを叩いて
-      // フォームの内容をサーバに送信するはず
+    onSubmit(number) {
+      const axiosBase = require('axios');
+      const axios = axiosBase.create({
+          baseURL: 'https://api.crow31415.net',
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          responseType: 'json'
+      });
+
+      axios.post({
+        amount: Number(this.number)
+      });
     },
     async getBalance() {
       await this.$store.dispatch('retrieveBalance');

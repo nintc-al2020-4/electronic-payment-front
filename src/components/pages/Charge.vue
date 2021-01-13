@@ -63,7 +63,7 @@ export default {
     async init() {
       this.balance = await this.getBalance();
     },
-    onSubmit(number) {
+    onSubmit() {
       const axiosBase = require('axios');
       const axios = axiosBase.create({
           baseURL: 'https://api.crow31415.net',

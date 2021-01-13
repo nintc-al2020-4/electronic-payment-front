@@ -15,8 +15,8 @@
                   </label>
                   <p v-show="NotNumber" v-bind:style="styleObject">入力が数値ではありません</p>
                 </div>
-                <button v-on:click="onSubmit(number)" class="btn btn-dark">チャージ</button>
-                <a href="/home" class="btn btn-dark text-light w-100 my-2" role="button">戻る</a>
+                <button v-on:click="onSubmit()" class="btn btn-dark">チャージ</button>
+                <a href="/" class="btn btn-dark text-light w-100 my-2" role="button">戻る</a>
               </form>
             </div>
           </div>
@@ -73,7 +73,7 @@ export default {
           responseType: 'json'
       });
 
-      axios.post({
+      axios.post("/charge", {
         amount: Number(this.number)
       });
     },

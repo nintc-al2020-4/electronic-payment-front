@@ -10,7 +10,8 @@ const app = createApp(App)
 const store = createStore({
     state () {
         return {
-            balance: 0
+            balance: 0,
+            token: process.env.VUE_APP_API_TOKEN
         }
     },
     mutations: {
@@ -22,15 +23,16 @@ const store = createStore({
         async retrieveBalance (context) {
             const axiosBase = require('axios');
             const axios = axiosBase.create({
-                baseURL: 'https://api.crow31415.net',
+                baseURL: process.env.VUE_APP_API_URL_BASE,
                 headers: {
                     'Content-Type': 'application/json',
+                    'Authorization': 'Token ' + context.state.token
                 },
                 responseType: 'json'
             });
 
             let balance = 0;
-            await axios.get('/balance').then(responce => {
+            await axios.get('/wallet').then(responce => {
                 balance = responce.data.balance;
             }).catch(err => {
                 console.log(err);

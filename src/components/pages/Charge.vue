@@ -16,7 +16,6 @@
                   <p v-show="NotNumber" v-bind:style="styleObject">入力が数値ではありません</p>
                 </div>
                 <button v-on:click="onSubmit()" class="btn btn-dark">チャージ</button>
-                <a href="/" class="btn btn-dark text-light w-100 my-2" role="button">戻る</a>
               </form>
             </div>
           </div>
@@ -66,14 +65,15 @@ export default {
     onSubmit() {
       const axiosBase = require('axios');
       const axios = axiosBase.create({
-          baseURL: 'https://api.crow31415.net',
-          headers: {
-              'Content-Type': 'application/json',
-          },
-          responseType: 'json'
+        baseURL: process.env.VUE_APP_API_URL_BASE,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Token ' + this.$store.state.token
+        },
+        responseType: 'json'
       });
 
-      axios.post("/charge", {
+      axios.post("/refills", {
         amount: Number(this.number)
       });
     },
@@ -97,22 +97,6 @@ export default {
 </script>
 
 <style scoped>
-.container-fluid {
-  padding: 1rem 2%;
-}
-
-.table {
-  table-layout: fixed;
-}
-
-.table tr td {
-  vertical-align: middle;
-}
-
-.table tr td {
-  word-wrap: break-word;
-}
-
 input[type="file"] {
   overflow: hidden;
 }

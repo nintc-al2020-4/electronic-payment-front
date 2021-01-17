@@ -1,8 +1,8 @@
 <template>
-  <div id="pay">
+  <div id="pay" v-if="initialized">
     <h4>以下のQRコードをスキャンしてください</h4>
     <div class="qr-code">
-      <qrcode-vue :value="value" :size="size" level="H"></qrcode-vue>
+      <qrcode-vue :value="paymentQrCode" :size="size" level="H"></qrcode-vue>
     </div>
     <a href="/" class="btn btn-dark" role="button">戻る</a>
   </div>
@@ -10,20 +10,46 @@
 </template>
 
 <script>
-import QrcodeVue from 'qrcode.vue'
+    import QrcodeVue from 'qrcode.vue'
+    export default {
+        name: "Pay",
+        data() {
+            return {
+                paymentQrCode: "",
+                size: 300,
+                initialized: false
+            }
+        },
+        components: {
+            QrcodeVue,
+        },
+        methods: {
+            async getAndSetPaymentToken() {
+                const axiosBase = require('axios');
+                const axios = axiosBase.create({
+                    baseURL: process.env.VUE_APP_API_URL_BASE,
+                    headers: {
+                        'Authorization': 'Token ' + this.$store.state.token
+                    },
+                    responseType: 'json'
+                });
+                await axios.get("/payment_token").then(response => {
+                    console.log(response);
+                    this.$data.paymentQrCode = response.data.token;
+                    this.initialized = true;
+                }).catch(err => {
+                    console.log(err);
+                });
+            },
 
-export default {
-  name: "Pay",
-  data() {
-    return {
-      value: 'https://github.com/nintc-al2020-4/electronic-payment-front/',
-      size: 300,
+            async init() {
+                this.getAndSetPaymentToken();
+            },
+        },
+        created() {
+            this.init();
+        }
     }
-  },
-  components: {
-    QrcodeVue,
-  }
-}
 </script>
 
 <style scoped>

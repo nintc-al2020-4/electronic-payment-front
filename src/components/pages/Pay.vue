@@ -4,7 +4,6 @@
     <div class="qr-code">
       <qrcode-vue :value="paymentQrCode" :size="size" level="H"></qrcode-vue>
     </div>
-    <a href="/" class="btn btn-dark" role="button">戻る</a>
   </div>
 
 </template>

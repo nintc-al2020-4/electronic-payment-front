@@ -18,7 +18,6 @@
           </li>
         </ul>
       </div>
-      <a href="/" class="btn btn-dark" role="button">戻る</a>
     </div>
   </div>
 </template>

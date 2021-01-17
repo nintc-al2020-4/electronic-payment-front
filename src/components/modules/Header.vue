@@ -1,7 +1,7 @@
 <template>
   <header class="pb-3">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-      <a class="navbar-brand" href="/">トップページ</a>
+      <router-link class="navbar-brand" to="/">トップページ</router-link>
       <button
         aria-controls="navbarNavAltMarkup"
         aria-expanded="false"
@@ -15,9 +15,9 @@
       </button>
       <div id="navbarNavAltMarkup" class="collapse navbar-collapse">
         <div class="navbar-nav">
-          <a class="nav-item nav-link active" href="/wallet">残高確認</a>
-          <a class="nav-item nav-link active" href="/charge">チャージ</a>
-          <a class="nav-item nav-link active" href="/pay">支払い</a>
+          <router-link class="nav-item nav-link active" to="/wallet">残高確認</router-link>
+          <router-link class="nav-item nav-link active" to="/charge">チャージ</router-link>
+          <router-link class="nav-item nav-link active" to="/pay">支払い</router-link>
         </div>
       </div>
     </nav>

@@ -2,7 +2,7 @@
   <div id="charge">
     <div class="container">
       <div class="row">
-        <div class="col-md-6 col-12">
+        <div class="col-md-6 col-12 mb-2">
           <div class="card h-100">
             <div class="card-body">
               <h4 class="card-title">入金額</h4>
@@ -19,7 +19,7 @@
             </div>
           </div>
         </div>
-        <div class="col-md-6 col-12">
+        <div class="col-md-6 col-12 mb-2">
           <div class="card h-100">
             <div class="card-body">
               <h4 class="card-title">残額</h4>

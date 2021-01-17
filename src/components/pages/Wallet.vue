@@ -1,26 +1,26 @@
 <template>
-    <div id="Wallet">
-        <div class="container">
-            <div class="top">
-                <div class="title">WALLET</div>
-                <div class="money-amount">{{ money }}<span class="tani">YEN</span></div>
-            </div>
-            <div class="money-kind">
-                <ul type="none" class="money-kind-ul">
-                    <li v-for="item in list" :key="item.id" class="money-kind-li">
-                        <ul type="none" class="amount-ul">
-                            <transition-group name="flip"  mode="out-in" appear>
-                                <li v-for="n of item.amount" :key="n.key" class="amount-li">
-                                    <img :src="item.image"/>
-                                </li>
-                            </transition-group>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-            <a href="/" class="btn btn-dark" role="button">戻る</a>
-        </div>
+  <div id="Wallet">
+    <div class="container">
+      <div class="top">
+        <div class="title">WALLET</div>
+        <div class="money-amount">{{ money }}<span class="tani">YEN</span></div>
+      </div>
+      <div class="money-kind">
+        <ul type="none" class="money-kind-ul">
+          <li v-for="item in list" :key="item.id" class="money-kind-li">
+            <ul type="none" class="amount-ul">
+              <transition-group name="flip"  mode="out-in" appear>
+                <li v-for="n of item.amount" :key="n.key" class="amount-li">
+                  <img :src="item.image"/>
+                </li>
+              </transition-group>
+            </ul>
+          </li>
+        </ul>
+      </div>
+      <a href="/" class="btn btn-dark" role="button">戻る</a>
     </div>
+  </div>
 </template>
 
 <script>
@@ -28,9 +28,9 @@ export default {
   name: "Wallet",
 
   data() {
-      return {
-        money: 3600,
-        list: [
+    return {
+      money: 3600,
+      list: [
         { amount: 0, name: 'tenthousand', image: require('@/assets/10000.png')},
         { amount: 0, name: 'fivethousand', image: require('@/assets/5000.png')},
         { amount: 0, name: 'thousand', image: require('@/assets/1000.png')},
@@ -40,10 +40,10 @@ export default {
         { amount: 0, name: 'ten', image: require('@/assets/10.png')},
         { amount: 0, name: 'five', image: require('@/assets/5.png')},
         { amount: 0, name: 'one', image: require('@/assets/1.png')}
-        ]
-      }
+      ]
+    }
   },
-   methods: {
+  methods: {
     async init() {
       let balance = 0;
       balance = await this.getBalance();

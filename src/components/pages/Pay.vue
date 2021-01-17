@@ -10,46 +10,46 @@
 </template>
 
 <script>
-    import QrcodeVue from 'qrcode.vue'
-    export default {
-        name: "Pay",
-        data() {
-            return {
-                paymentQrCode: "",
-                size: 300,
-                initialized: false
-            }
-        },
-        components: {
-            QrcodeVue,
-        },
-        methods: {
-            async getAndSetPaymentToken() {
-                const axiosBase = require('axios');
-                const axios = axiosBase.create({
-                    baseURL: process.env.VUE_APP_API_URL_BASE,
-                    headers: {
-                        'Authorization': 'Token ' + this.$store.state.token
-                    },
-                    responseType: 'json'
-                });
-                await axios.get("/payment_token").then(response => {
-                    console.log(response);
-                    this.$data.paymentQrCode = response.data.token;
-                    this.initialized = true;
-                }).catch(err => {
-                    console.log(err);
-                });
-            },
-
-            async init() {
-                this.getAndSetPaymentToken();
-            },
-        },
-        created() {
-            this.init();
-        }
+import QrcodeVue from 'qrcode.vue'
+export default {
+  name: "Pay",
+  data() {
+    return {
+      paymentQrCode: "",
+      size: 300,
+      initialized: false
     }
+  },
+  components: {
+    QrcodeVue,
+  },
+  methods: {
+    async getAndSetPaymentToken() {
+      const axiosBase = require('axios');
+      const axios = axiosBase.create({
+        baseURL: process.env.VUE_APP_API_URL_BASE,
+        headers: {
+          'Authorization': 'Token ' + this.$store.state.token
+        },
+        responseType: 'json'
+      });
+      await axios.get("/payment_token").then(response => {
+        console.log(response);
+        this.$data.paymentQrCode = response.data.token;
+        this.initialized = true;
+      }).catch(err => {
+        console.log(err);
+      });
+    },
+
+    async init() {
+      this.getAndSetPaymentToken();
+    },
+  },
+  created() {
+    this.init();
+  }
+}
 </script>
 
 <style scoped>

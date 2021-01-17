@@ -9,7 +9,7 @@
                 <ul type="none" class="money-kind-ul">
                     <li v-for="item in list" :key="item.id" class="money-kind-li">
                         <ul type="none" class="amount-ul">
-                            <transition-group name="flip">
+                            <transition-group name="flip"  mode="out-in" appear>
                                 <li v-for="n of item.amount" :key="n.key" class="amount-li">
                                     <img :src="item.image"/>
                                 </li>
@@ -29,7 +29,7 @@ export default {
 
   data() {
       return {
-        money: 0,
+        money: 3600,
         list: [
         { amount: 0, name: 'tenthousand', image: require('@/assets/10000.png')},
         { amount: 0, name: 'fivethousand', image: require('@/assets/5000.png')},
@@ -88,11 +88,11 @@ img {
 }
 .title {
     font-size: 3vw;
-    color: #939597;
+    color: #343a40;
 }
 .money-amount {
     font-size: 10vw;
-    color:#939597;
+    color:#343a40;
 }
 .tani{
     font-size: 5vw;
@@ -126,6 +126,8 @@ img {
     padding-top: -100vw;
     padding-bottom: -200vw;
     transition: transform 1s;
+
+
 }
 
 /* Transition */

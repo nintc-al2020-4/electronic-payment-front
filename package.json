@@ -22,8 +22,11 @@
     "@vue/compiler-sfc": "^3.0.0",
     "babel-eslint": "^10.1.0",
     "eslint": "^6.7.2",
+    "eslint-config-prettier": "^7.1.0",
+    "eslint-plugin-prettier": "^3.3.1",
     "eslint-plugin-vue": "^7.0.0-0",
-    "husky": "^4.3.8"
+    "husky": "^4.3.8",
+    "prettier": "^2.2.1"
   },
   "eslintConfig": {
     "root": true,
@@ -31,15 +34,24 @@
       "node": true
     },
     "extends": [
-      "plugin:vue/vue3-essential",
-      "eslint:recommended"
+      "eslint:recommended",
+      "plugin:vue/vue3-recommended",
+      "plugin:prettier/recommended",
+      "prettier/vue"
     ],
     "parserOptions": {
       "parser": "babel-eslint"
     },
     "rules": {
-      "indent": ["error", 2],
-      "vue/html-indent": ["error", 2]
+      "prettier/prettier": [
+        "error",
+        {
+          "printWidth": 120,
+          "singleQuote": true,
+          "semi": false,
+          "trailingComma": "none"
+        }
+      ]
     }
   },
   "husky": {

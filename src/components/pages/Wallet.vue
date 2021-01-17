@@ -132,27 +132,4 @@ img {
   padding-bottom: -200vw;
   transition: transform 1s;
 }
-
-/* Transition */
-.flip-move {
-  transition: transform 1s;
-}
-.flip-enter-active {
-  opacity: 0;
-  transform: translateZ(30px);
-  transition: opacity 0.5s, transform 0.5s;
-}
-.flip-enter-to {
-  opacity: 1;
-}
-.flip-leave-active {
-  opacity: 0;
-  transform: translateZ(30px);
-  transition: opacity 0.5s, transform 0.5s;
-  position: absolute;
-}
-.flip-leave-to {
-  opacity: 0;
-  transform: translateZ(30px);
-}
 </style>

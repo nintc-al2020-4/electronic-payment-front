@@ -1,5 +1,5 @@
 <template>
-  <div id="pay" v-if="initialized">
+  <div v-if="initialized" id="pay">
     <h4>以下のQRコードをスキャンしてください</h4>
     <div class="qr-code">
       <qrcode-vue :value="paymentQrCode" :size="size" level="H"></qrcode-vue>
@@ -8,48 +8,49 @@
 </template>
 
 <script>
+import axios from 'axios'
 import QrcodeVue from 'qrcode.vue'
+
 export default {
-  name: "Pay",
+  name: 'Pay',
+  components: {
+    QrcodeVue
+  },
   data() {
     return {
-      paymentQrCode: "",
+      paymentQrCode: '',
       size: 300,
       initialized: false
     }
   },
-  components: {
-    QrcodeVue,
+  created() {
+    this.init()
   },
   methods: {
-    async retrievePaymentToken() {
-      const axiosBase = require('axios');
-      const axios = axiosBase.create({
-        baseURL: process.env.VUE_APP_API_URL_BASE,
-        headers: {
-          'Authorization': 'Token ' + this.$store.state.token
-        },
-        responseType: 'json'
-      });
-      await axios.get("/payment_token").then(response => {
-        console.log(response);
-        this.$data.paymentQrCode = response.data.token;
-        this.initialized = true;
-      }).catch(err => {
-        console.log(err);
-      });
+    async getAndSetPaymentToken() {
+      await axios
+        .get('/payment_token', {
+          baseURL: process.env.VUE_APP_API_URL_BASE,
+          headers: {
+            Authorization: 'Token ' + this.$store.state.token
+          },
+          responseType: 'json'
+        })
+        .then((response) => {
+          console.log(response)
+          this.$data.paymentQrCode = response.data.token
+          this.initialized = true
+        })
+        .catch((err) => {
+          console.log(err)
+        })
     },
 
     async init() {
-      this.retrievePaymentToken();
-    },
-  },
-  created() {
-    this.init();
+      await this.getAndSetPaymentToken()
+    }
   }
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

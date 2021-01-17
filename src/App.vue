@@ -4,20 +4,29 @@
 </template>
 
 <script>
-import Header from "@/components/modules/Header";
+import Header from '@/components/modules/Header'
 
 export default {
   name: 'App',
-  components: {Header},
-  methods : {
+  components: { Header },
+  watch: {
+    $route(routeInstance) {
+      this.setTitleDescription(routeInstance)
+    }
+  },
+  mounted() {
+    const routeInstance = this.$route
+    this.setTitleDescription(routeInstance)
+  },
+  methods: {
     setTitleDescription(routeInstance) {
       // タイトルを設定
-      const defaultTitle = "奈良高専電子決済";
+      const defaultTitle = '奈良高専電子決済'
       const title = routeInstance.meta.title
       if (title) {
-        document.title = title + ' - ' + defaultTitle;
+        document.title = title + ' - ' + defaultTitle
       } else {
-        document.title = defaultTitle;
+        document.title = defaultTitle
       }
 
       // メタタグdescription設定
@@ -27,15 +36,6 @@ export default {
       } else {
         document.querySelector("meta[name='description']").setAttribute('content', 'description is not set')
       }
-    }
-  },
-  mounted(){
-    const routeInstance = this.$route;
-    this.setTitleDescription(routeInstance);
-  },
-  watch: {
-    '$route' (routeInstance) {
-      this.setTitleDescription(routeInstance);
     }
   }
 }

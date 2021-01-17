@@ -6,12 +6,12 @@
         <div class="money-amount">{{ money }}<span class="tani">YEN</span></div>
       </div>
       <div class="money-kind">
-        <ul type="none" class="money-kind-ul">
+        <ul class="money-kind-ul">
           <li v-for="item in list" :key="item.id" class="money-kind-li">
-            <ul type="none" class="amount-ul">
-              <transition-group name="flip"  mode="out-in" appear>
+            <ul class="amount-ul">
+              <transition-group name="flip" mode="out-in" appear>
                 <li v-for="n of item.amount" :key="n.key" class="amount-li">
-                  <img :src="item.image"/>
+                  <img :src="item.image" :alt="item.name"/>
                 </li>
               </transition-group>
             </ul>
@@ -29,7 +29,7 @@ export default {
 
   data() {
     return {
-      money: 3600,
+      money: 0,
       list: [
         { amount: 0, name: 'tenthousand', image: require('@/assets/10000.png')},
         { amount: 0, name: 'fivethousand', image: require('@/assets/5000.png')},
@@ -45,8 +45,7 @@ export default {
   },
   methods: {
     async init() {
-      let balance = 0;
-      balance = await this.getBalance();
+      const balance = await this.getBalance();
       this.money = balance;
       this.showBalance(balance);
     },
@@ -56,11 +55,11 @@ export default {
     },
     showBalance(balance) {
       const kinds = [10000, 5000, 1000, 500, 100, 50, 10, 5, 1];
-      let tmp = balance;
-      for (let i=0; i<kinds.length; i++){
-        this.list[i].amount = Math.floor(tmp / kinds[i]);
-        tmp = tmp % kinds[i];
-      }
+
+      kinds.reduce((tmp, value, i) => {
+        this.list[i].amount = Math.floor(tmp / value)
+        return tmp % kinds[i]
+      }, balance)
     }
   },
   created() {

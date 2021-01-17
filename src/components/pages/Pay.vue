@@ -5,7 +5,6 @@
       <qrcode-vue :value="paymentQrCode" :size="size" level="H"></qrcode-vue>
     </div>
   </div>
-
 </template>
 
 <script>
@@ -23,7 +22,7 @@ export default {
     QrcodeVue,
   },
   methods: {
-    async getAndSetPaymentToken() {
+    async retrievePaymentToken() {
       const axiosBase = require('axios');
       const axios = axiosBase.create({
         baseURL: process.env.VUE_APP_API_URL_BASE,
@@ -42,7 +41,7 @@ export default {
     },
 
     async init() {
-      this.getAndSetPaymentToken();
+      this.retrievePaymentToken();
     },
   },
   created() {

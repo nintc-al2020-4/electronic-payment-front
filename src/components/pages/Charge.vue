@@ -2,7 +2,7 @@
   <div id="charge">
     <div class="container">
       <div class="row">
-        <div class="col-md-6 col-12">
+        <div class="col-md-6 col-12 mb-2">
           <div class="card h-100">
             <div class="card-body">
               <h4 class="card-title">
@@ -13,14 +13,18 @@
                   <label>入金額を入力してください
                     <input v-model.number="number" type="number" class="form-control" min="0">
                   </label>
-                  <p v-show="NotNumber" v-bind:style="styleObject">入力が数値ではありません</p>
+                  <p v-show="NotNumber" v-bind:style="styleObject">
+                    入力が数値ではありません
+                  </p>
                 </div>
-                <button v-on:click="onSubmit()" class="btn btn-dark">チャージ</button>
+                <button v-on:click="onSubmit()" class="btn btn-dark">
+                  チャージ
+                </button>
               </form>
             </div>
           </div>
         </div>
-        <div class="col-md-6 col-12">
+        <div class="col-md-6 col-12 mb-2">
           <div class="card h-100">
             <div class="card-body">
               <h4 class="card-title">

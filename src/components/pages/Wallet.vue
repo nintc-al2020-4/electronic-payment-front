@@ -2,8 +2,15 @@
   <div id="Wallet">
     <div class="container">
       <div class="top">
-        <div class="title">WALLET</div>
-        <div class="money-amount">{{ money }}<span class="tani">YEN</span></div>
+        <div class="title">
+          WALLET
+        </div>
+        <div class="money-amount">
+          {{ money }}
+          <span class="tani">
+            YEN
+          </span>
+        </div>
       </div>
       <div class="money-kind">
         <ul class="money-kind-ul">
@@ -68,88 +75,84 @@ export default {
 </script>
 <style scoped>
 img {
-    height: 13vw;
-    padding: 2%;
+  height: 13vw;
+  padding: 2%;
 }
 .top {
-    /* background-color:#939597; */
-    padding: 5%;
-    margin: 5%;
-    /* border-radius: 2vw */
-    border-radius: 27px;
-    background: #e0e0e0;
-    box-shadow:  18px 18px 36px #bebebe,
-                -18px -18px 36px #ffffff;
+  /* background-color:#939597; */
+  padding: 5%;
+  margin: 5%;
+  /* border-radius: 2vw */
+  border-radius: 27px;
+  background: #e0e0e0;
+  box-shadow:  18px 18px 36px #bebebe,
+              -18px -18px 36px #ffffff;
 }
 .container {
-    padding: 5%;
+  padding: 5%;
 }
 .title {
-    font-size: 3vw;
-    color: #343a40;
+  font-size: 3vw;
+  color: #343a40;
 }
 .money-amount {
-    font-size: 10vw;
-    color:#343a40;
+  font-size: 10vw;
+  color:#343a40;
 }
 .tani{
-    font-size: 5vw;
-    margin-left: 3%;
+  font-size: 5vw;
+  margin-left: 3%;
 }
 .money-kind {
-    /* background-color:#f0eee993; */
-    padding: 5%;
-    margin: 5%;
-    /* border-radius: 2vw; */
-    border-radius: 27px;
-    background: #e0e0e0;
-    box-shadow:  18px 18px 36px #bebebe,
-                -18px -18px 36px #ffffff;
+  /* background-color:#f0eee993; */
+  padding: 5%;
+  margin: 5%;
+  /* border-radius: 2vw; */
+  border-radius: 27px;
+  background: #e0e0e0;
+  box-shadow:  18px 18px 36px #bebebe,
+              -18px -18px 36px #ffffff;
 }
 .money-kind-ul {
-    display: flex;
-    flex-wrap: wrap;
-    padding-left: 0;
-    font-size:0;
-    width: 100%;
-    justify-content: center;
+  display: flex;
+  flex-wrap: wrap;
+  padding-left: 0;
+  font-size:0;
+  width: 100%;
+  justify-content: center;
 }
 .money-kind-li {
-    flex-wrap: wrap;
+  flex-wrap: wrap;
 }
 .amount-ul{
-    padding-left:0;
+  padding-left:0;
 }
 .amount-li{
-    padding-top: -100vw;
-    padding-bottom: -200vw;
-    transition: transform 1s;
-
-
+  padding-top: -100vw;
+  padding-bottom: -200vw;
+  transition: transform 1s;
 }
 
 /* Transition */
 .flip-move {
-    transition: transform 1s;
+  transition: transform 1s;
 }
 .flip-enter-active {
-    opacity: 0;
-    transform: translateZ(30px);
-    transition: opacity 0.5s, transform 0.5s;
+  opacity: 0;
+  transform: translateZ(30px);
+  transition: opacity 0.5s, transform 0.5s;
 }
 .flip-enter-to {
-    opacity: 1;
+  opacity: 1;
 }
 .flip-leave-active {
-    opacity: 0;
-    transform: translateZ(30px);
-    transition: opacity 0.5s, transform 0.5s;
-    position: absolute;
+  opacity: 0;
+  transform: translateZ(30px);
+  transition: opacity 0.5s, transform 0.5s;
+  position: absolute;
 }
 .flip-leave-to {
-    opacity: 0;
-    transform: translateZ(30px);
+  opacity: 0;
+  transform: translateZ(30px);
 }
-
-
 </style>

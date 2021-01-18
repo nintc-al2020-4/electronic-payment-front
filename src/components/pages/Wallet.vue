@@ -1,23 +1,21 @@
 <template>
-  <div id="Wallet">
-    <div class="container">
-      <div class="top">
-        <div class="title">WALLET</div>
-        <div class="money-amount">{{ money }}<span class="tani">YEN</span></div>
-      </div>
-      <div class="money-kind">
-        <ul class="money-kind-ul">
-          <li v-for="item in list" :key="item.id" class="money-kind-li">
-            <ul class="amount-ul">
-              <transition-group name="flip" mode="out-in" appear>
-                <li v-for="n of item.amount" :key="n.key" class="amount-li">
-                  <img :src="item.image" :alt="item.name" />
-                </li>
-              </transition-group>
-            </ul>
-          </li>
-        </ul>
-      </div>
+  <div id="Wallet" class="container">
+    <div class="top">
+      <div class="title">WALLET</div>
+      <div class="money-amount">{{ money }}<span class="tani">YEN</span></div>
+    </div>
+    <div class="money-kind">
+      <ul class="money-kind-ul">
+        <li v-for="item of list" :key="item.name" class="money-kind-li">
+          <ul class="amount-ul">
+            <transition-group name="flip" mode="out-in" appear>
+              <li v-for="n of item.amount" :key="`${item.name}-${n.key}`" class="amount-li">
+                <img :src="item.image" :alt="item.name" />
+              </li>
+            </transition-group>
+          </ul>
+        </li>
+      </ul>
     </div>
   </div>
 </template>
@@ -30,10 +28,10 @@ export default {
     return {
       money: 0,
       list: [
-        { amount: 0, name: 'tenthousand', image: require('@/assets/10000.png') },
-        { amount: 0, name: 'fivethousand', image: require('@/assets/5000.png') },
+        { amount: 0, name: 'ten-thousand', image: require('@/assets/10000.png') },
+        { amount: 0, name: 'five-thousand', image: require('@/assets/5000.png') },
         { amount: 0, name: 'thousand', image: require('@/assets/1000.png') },
-        { amount: 0, name: 'fivehundred', image: require('@/assets/500.png') },
+        { amount: 0, name: 'five-hundred', image: require('@/assets/500.png') },
         { amount: 0, name: 'hundred', image: require('@/assets/100.png') },
         { amount: 0, name: 'fifty', image: require('@/assets/50.png') },
         { amount: 0, name: 'ten', image: require('@/assets/10.png') },

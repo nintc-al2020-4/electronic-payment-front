@@ -1,8 +1,9 @@
 <template>
-  <div v-if="initialized" id="pay">
-    <h4>以下のQRコードをスキャンしてください</h4>
+  <div id="pay" class="container">
+    <h4 class="h4">以下のQRコードをスキャンしてください</h4>
     <div class="qr-code">
-      <qrcode-vue :value="paymentQrCode" :size="size" level="H"></qrcode-vue>
+      <qrcode-vue v-if="initialized" :value="paymentQrCode" :size="size" level="H"></qrcode-vue>
+      <p v-else>Now Loading...</p>
     </div>
   </div>
 </template>
@@ -27,7 +28,12 @@ export default {
     this.init()
   },
   methods: {
-    async getAndSetPaymentToken() {
+    async init() {
+      this.paymentQrCode = await this.retrievePaymentToken()
+    },
+    async retrievePaymentToken() {
+      let token = ''
+
       await axios
         .get('/payment_token', {
           baseURL: process.env.VUE_APP_API_URL_BASE,
@@ -37,17 +43,15 @@ export default {
           responseType: 'json'
         })
         .then((response) => {
-          console.log(response)
-          this.$data.paymentQrCode = response.data.token
+          token = response.data.token
           this.initialized = true
         })
         .catch((err) => {
           console.log(err)
         })
-    },
 
-    async init() {
-      await this.getAndSetPaymentToken()
+      console.log('[info] Token: ' + token)
+      return token
     }
   }
 }

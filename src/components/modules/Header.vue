@@ -30,4 +30,8 @@ export default {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+header {
+  z-index: 1;
+}
+</style>

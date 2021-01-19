@@ -1,8 +1,9 @@
 <template>
   <div id="home" class="container">
-    <router-link to="/wallet" class="card">
+    <router-link to="/wallet" class="card text-decoration-none">
       <div class="card-body">
-        <p class="card-text">残高を見る</p>
+        <h4 class="h4 card-title text-dark">残高</h4>
+        <p class="h2 card-text align-middle text-dark">¥{{ balance.toLocaleString() }}-</p>
       </div>
     </router-link>
     <div class="row">
@@ -20,7 +21,24 @@
 
 <script>
 export default {
-  name: 'Home'
+  name: 'Home',
+  data() {
+    return {
+      balance: 0
+    }
+  },
+  created() {
+    this.init()
+  },
+  methods: {
+    async init() {
+      this.balance = await this.getBalance()
+    },
+    async getBalance() {
+      await this.$store.dispatch('retrieveBalance')
+      return this.$store.state.balance
+    }
+  }
 }
 </script>
 

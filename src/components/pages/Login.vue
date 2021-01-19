@@ -4,12 +4,12 @@
     <div class="form-group">
       <label>
         Eメール
-        <input v-model="mailaddress" type="email" maxlength="72" class="form-control" />
+        <input v-model="mailaddress" type="email" pattern=".+" maxlength="72" class="form-control" />
       </label>
       <br />
       <label>
         パスワード
-        <input v-model="password" type="password" pattern="[!-~]" maxlength="72" class="form-control" />
+        <input v-model="password" type="password" pattern="[!-~]+" maxlength="72" class="form-control" />
       </label>
       <br />
       <button class="btn btn-dark" @click="onSubmit()">ログイン</button>

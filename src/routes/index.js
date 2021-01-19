@@ -4,6 +4,7 @@ import Home from '@/components/pages/Home'
 import Charge from '@/components/pages/Charge'
 import Pay from '@/components/pages/Pay'
 import Wallet from '@/components/pages/Wallet'
+import Login from '@/components/pages/Login'
 
 const router = createRouter({
   history: createWebHistory(),
@@ -13,6 +14,12 @@ const router = createRouter({
       name: 'home',
       component: Home,
       meta: { title: 'トップページ', description: '' }
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: Login,
+      meta: { title: 'ログイン', description: '' }
     },
     {
       path: '/charge',

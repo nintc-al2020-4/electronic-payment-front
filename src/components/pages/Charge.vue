@@ -66,22 +66,27 @@ export default {
       this.balance = await this.getBalance()
     },
     onSubmit() {
-      axios.post(
-        '/refills',
-        {
-          amount: Number(this.amount)
-        },
-        {
-          baseURL: process.env.VUE_APP_API_URL_BASE,
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: 'Token ' + this.$store.state.token
+      axios
+        .post(
+          '/refills',
+          {
+            amount: Number(this.amount)
           },
-          responseType: 'json'
-        }
-      )
-
-      this.init()
+          {
+            baseURL: process.env.VUE_APP_API_URL_BASE,
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: 'Token ' + this.$store.state.token
+            },
+            responseType: 'json'
+          }
+        )
+        .then(() => {
+          this.init()
+        })
+        .catch((err) => {
+          console.log(err)
+        })
     },
     async getBalance() {
       await this.$store.dispatch('retrieveBalance')

@@ -11,10 +11,13 @@ export default {
   components: { Header },
   watch: {
     $route(routeInstance) {
+      this.checkAccessToken()
       this.setTitleDescription(routeInstance)
     }
   },
   mounted() {
+    this.checkAccessToken()
+
     const routeInstance = this.$route
     this.setTitleDescription(routeInstance)
   },
@@ -35,6 +38,11 @@ export default {
         document.querySelector("meta[name='description']").setAttribute('content', desc)
       } else {
         document.querySelector("meta[name='description']").setAttribute('content', 'description is not set')
+      }
+    },
+    checkAccessToken() {
+      if (this.$store.state.token == null) {
+        this.$router.push({ name: 'login' })
       }
     }
   }

@@ -5,12 +5,15 @@ const store = createStore({
   state() {
     return {
       balance: 0,
-      token: process.env.VUE_APP_API_TOKEN
+      token: null
     }
   },
   mutations: {
     setBalance(state, balance) {
       state.balance = balance
+    },
+    setToken(state, token) {
+      state.token = token
     }
   },
   actions: {

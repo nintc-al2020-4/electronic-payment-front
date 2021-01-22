@@ -1,21 +1,27 @@
 <template>
-  <div id="Wallet" class="container">
-    <div class="top">
-      <div class="title">WALLET</div>
-      <div class="money-amount">{{ money }}<span class="tani">YEN</span></div>
-    </div>
-    <div class="money-kind">
-      <ul class="money-kind-ul">
-        <li v-for="item of list" :key="item.name" class="money-kind-li">
-          <ul class="amount-ul">
-            <transition-group name="flip" mode="out-in" appear>
-              <li v-for="n of item.amount" :key="`${item.name}-${n.key}`" class="amount-li">
-                <img :src="item.image" :alt="item.name" />
-              </li>
-            </transition-group>
-          </ul>
-        </li>
-      </ul>
+  <div id="Wallet">
+    <div class="container">
+      <div class="top">
+        <div class="title">WALLET</div>
+        <div class="money-amount">{{ moneyAmount }}<span class="tani">JPY</span></div>
+      </div>
+      <div class="money-kinds-wrapper">
+        <div class="money-kinds">
+          <div v-for="currencyAmount in filteredCurrencyAmounts" :key="currencyAmount.key" class="money-kind">
+            <div class="money-images">
+              <transition-group name="flip" mode="out-in" appear>
+                <div v-for="n of currencyAmount.quantity" :key="n.key" class="money-image">
+                  <img
+                    class="money"
+                    :src="getCurrencyImage(currencyAmount.denomination)"
+                    :alt="`${currencyAmount.denomination}円`"
+                  />
+                </div>
+              </transition-group>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -26,18 +32,34 @@ export default {
 
   data() {
     return {
+      initialized: false,
       money: 0,
-      list: [
-        { amount: 0, name: 'ten-thousand', image: require('@/assets/10000.png') },
-        { amount: 0, name: 'five-thousand', image: require('@/assets/5000.png') },
-        { amount: 0, name: 'thousand', image: require('@/assets/1000.png') },
-        { amount: 0, name: 'five-hundred', image: require('@/assets/500.png') },
-        { amount: 0, name: 'hundred', image: require('@/assets/100.png') },
-        { amount: 0, name: 'fifty', image: require('@/assets/50.png') },
-        { amount: 0, name: 'ten', image: require('@/assets/10.png') },
-        { amount: 0, name: 'five', image: require('@/assets/5.png') },
-        { amount: 0, name: 'one', image: require('@/assets/1.png') }
+      currencyAmounts: [
+        { denomination: 1, quantity: 0 },
+        { denomination: 5, quantity: 0 },
+        { denomination: 10, quantity: 0 },
+        { denomination: 50, quantity: 0 },
+        { denomination: 100, quantity: 0 },
+        { denomination: 500, quantity: 0 },
+        { denomination: 1000, quantity: 0 },
+        { denomination: 5000, quantity: 0 },
+        { denomination: 10000, quantity: 0 }
       ]
+    }
+  },
+  computed: {
+    sortedCurrencyAmountsByDenomination() {
+      const currencyAmounts = this.currencyAmounts.concat()
+
+      return currencyAmounts.sort((a, b) => {
+        return b.denomination - a.denomination
+      })
+    },
+    filteredCurrencyAmounts() {
+      return this.sortedCurrencyAmountsByDenomination.filter((x) => x.quantity > 0)
+    },
+    moneyAmount() {
+      return this.initialized ? this.money.toLocaleString() : '-'
     }
   },
   created() {
@@ -48,32 +70,37 @@ export default {
       const balance = await this.getBalance()
       this.money = balance
       this.showBalance(balance)
+      this.initialized = true
     },
     async getBalance() {
       await this.$store.dispatch('retrieveBalance')
       return this.$store.state.balance
     },
+    getCurrencyImage(currency) {
+      return `/img/${currency}.png`
+    },
     showBalance(balance) {
-      const kinds = [10000, 5000, 1000, 500, 100, 50, 10, 5, 1]
+      const currencies = this.sortedCurrencyAmountsByDenomination.map((x) => x.denomination)
 
-      kinds.reduce((tmp, value, i) => {
-        this.list[i].amount = Math.floor(tmp / value)
-        return tmp % kinds[i]
+      currencies.reduce((tmp, currency) => {
+        const index = this.currencyAmounts.findIndex((elem) => elem.denomination === currency)
+
+        this.currencyAmounts[index].quantity = Math.floor(tmp / currency)
+        return tmp % currency
       }, balance)
     }
   }
 }
 </script>
 <style scoped>
-img {
+img.money {
   height: 13vw;
   padding: 2%;
+  filter: drop-shadow(0 0 1vw rgba(0, 0, 0, 0.25));
 }
 .top {
-  /* background-color:#939597; */
   padding: 5%;
   margin: 5%;
-  /* border-radius: 2vw */
   border-radius: 27px;
   background: #e0e0e0;
   box-shadow: 18px 18px 36px #bebebe, -18px -18px 36px #ffffff;
@@ -93,16 +120,14 @@ img {
   font-size: 5vw;
   margin-left: 3%;
 }
-.money-kind {
-  /* background-color:#f0eee993; */
+.money-kinds-wrapper {
   padding: 5%;
   margin: 5%;
-  /* border-radius: 2vw; */
   border-radius: 27px;
   background: #e0e0e0;
   box-shadow: 18px 18px 36px #bebebe, -18px -18px 36px #ffffff;
 }
-.money-kind-ul {
+.money-kinds {
   display: flex;
   flex-wrap: wrap;
   padding-left: 0;
@@ -110,15 +135,15 @@ img {
   width: 100%;
   justify-content: center;
 }
-.money-kind-li {
+.money-kind {
   flex-wrap: wrap;
 }
-.amount-ul {
-  padding-left: 0;
+.money-images {
+  margin: 0 2vw 13vw;
 }
-.amount-li {
-  padding-top: -100vw;
-  padding-bottom: -200vw;
+.money-image {
   transition: transform 1s;
+  position: relative;
+  margin-bottom: -10vw;
 }
 </style>

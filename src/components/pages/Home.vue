@@ -3,7 +3,7 @@
     <router-link to="/wallet" class="card text-decoration-none">
       <div class="card-body">
         <h4 class="h4 card-title text-dark">残高</h4>
-        <p class="h2 card-text align-middle text-dark">¥{{ balance.toLocaleString() }}-</p>
+        <p class="h2 card-text align-middle text-dark">¥{{ balance }}</p>
       </div>
     </router-link>
     <div class="row">
@@ -24,7 +24,12 @@ export default {
   name: 'Home',
   data() {
     return {
-      balance: 0
+      initialized: false
+    }
+  },
+  computed: {
+    balance() {
+      return this.initialized ? this.$store.state.balance.toLocaleString() : '-'
     }
   },
   created() {
@@ -32,11 +37,11 @@ export default {
   },
   methods: {
     async init() {
-      this.balance = await this.getBalance()
+      await this.getBalance()
+      this.initialized = true
     },
     async getBalance() {
       await this.$store.dispatch('retrieveBalance')
-      return this.$store.state.balance
     }
   }
 }

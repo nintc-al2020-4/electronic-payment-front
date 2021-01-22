@@ -19,12 +19,12 @@
       <div class="col-md-6 col-12 mb-2">
         <div class="card h-100">
           <div class="card-body">
-            <h4 class="card-title">残額</h4>
+            <h4 class="card-title">残高</h4>
             <div class="row">
               <p class="col-5">
                 {{ balance }}
               </p>
-              <p class="col-2">-></p>
+              <p class="col-2">→</p>
               <p class="col-5">
                 {{ balance + Number(amount) }}
               </p>

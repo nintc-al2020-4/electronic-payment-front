@@ -3,7 +3,7 @@
     <h4 class="h4">以下のQRコードをスキャンしてください</h4>
     <div class="qr-code">
       <qrcode-vue v-if="initialized" :value="paymentQrCode" :size="size" level="H"></qrcode-vue>
-      <p v-else>Now Loading...</p>
+      <p v-else>{{ message }}</p>
     </div>
   </div>
 </template>
@@ -21,7 +21,8 @@ export default {
     return {
       paymentQrCode: '',
       size: 300,
-      initialized: false
+      initialized: false,
+      message: 'Now Loading...'
     }
   },
   created() {
@@ -47,6 +48,7 @@ export default {
           this.initialized = true
         })
         .catch((err) => {
+          this.message = '支払いトークンの取得に失敗しました'
           console.log(err)
         })
 

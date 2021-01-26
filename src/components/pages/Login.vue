@@ -14,6 +14,8 @@
       </label>
     </div>
     <button class="btn btn-dark" @click="onSubmit()">ログイン</button>
+    <br />
+    {{ errorMsg }}
   </div>
 </template>
 
@@ -25,7 +27,8 @@ export default {
   data() {
     return {
       email: null,
-      password: null
+      password: null,
+      errorMsg: ''
     }
   },
   created() {
@@ -53,16 +56,16 @@ export default {
         .then((response) => {
           const token = response.data.token
           this.$store.commit('setToken', token)
-
           this.$router.push({ name: 'home' })
         })
         .catch((err) => {
+          if (err.message === 'Request failed with status code 401') {
+            this.errorMsg = 'Eメールもしくはパスワードが正しくありません'
+          } else {
+            this.errorMsg = 'ログインに失敗しました。再度お試しください。'
+          }
           console.log(err)
         })
-    },
-    //Eメールとパスワードが適切に入力されているか
-    isValid() {
-      return false
     }
   }
 }
